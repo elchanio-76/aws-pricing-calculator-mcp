@@ -34,13 +34,13 @@ pip install uv
 The server is designed to be run via `uvx` directly from GitHub (no installation needed):
 
 ```bash
-uvx --from git+https://github.com/YOUR_USERNAME/aws-pricing-calculator-mcp aws-pricing-calculator-mcp
+uvx --from git+https://github.com/elchanio-76/aws-pricing-calculator-mcp aws-pricing-calculator-mcp
 ```
 
 Or install it globally:
 
 ```bash
-uv tool install git+https://github.com/YOUR_USERNAME/aws-pricing-calculator-mcp
+uv tool install git+https://github.com/elchanio-76/aws-pricing-calculator-mcp
 ```
 
 Once published to PyPI, you can use the simpler form:
@@ -51,7 +51,7 @@ uvx aws-pricing-calculator-mcp
 
 ## Usage with Kiro
 
-This MCP server is designed to work with the [AWS Pricing Calculator Power](https://github.com/YOUR_USERNAME/aws-pricing-calculator-power) for Kiro.
+This MCP server is designed to work with the [AWS Pricing Calculator Power](https://github.com/elchanio-76/aws-pricing-calculator-power) for Kiro.
 
 ### Configuration
 
@@ -62,7 +62,7 @@ Add to your Kiro MCP configuration (`.kiro/settings/mcp.json`):
   "mcpServers": {
     "aws-pricing-calculator": {
       "command": "uvx",
-      "args": ["--from", "git+https://github.com/YOUR_USERNAME/aws-pricing-calculator-mcp", "aws-pricing-calculator-mcp"],
+      "args": ["--from", "git+https://github.com/elchanio-76/aws-pricing-calculator-mcp", "aws-pricing-calculator-mcp"],
       "disabled": false
     }
   }
@@ -83,7 +83,7 @@ Or if published to PyPI:
 }
 ```
 
-Or install the power which includes this configuration automatically.
+Or install the [Kiro Power](https://github.com/elchanio-76/aws-pricing-calculator-power) which includes this configuration automatically.
 
 ## Tools
 
@@ -143,7 +143,7 @@ Convert AWS region code to display name.
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/aws-pricing-calculator-mcp.git
+git clone https://github.com/elchanio-76/aws-pricing-calculator-mcp.git
 cd aws-pricing-calculator-mcp
 
 # Install dependencies
@@ -183,3 +183,4 @@ MIT
 
 Inspired by [aws-pricing-calculator](https://github.com/quincysting/aws-pricing-calculator) by Ian Qin.
 Tools have been created by converting scripts from that repo.
+Power.md and steering docs are based on the original repo with minor changes to make them compatible with Kiro Powers.

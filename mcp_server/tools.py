@@ -142,6 +142,7 @@ async def save_estimate_tool(estimate: dict[str, Any]) -> dict[str, Any]:
         Dictionary with the saved key and calculator URL, or error information.
     """
     try:
+        import traceback
         result = save_estimate(estimate)
         
         # Calculate summary
@@ -164,9 +165,11 @@ async def save_estimate_tool(estimate: dict[str, Any]) -> dict[str, Any]:
         }
     
     except Exception as e:
+        import traceback
         return {
             "success": False,
-            "error": str(e)
+            "error": str(e),
+            "traceback": traceback.format_exc()
         }
 
 

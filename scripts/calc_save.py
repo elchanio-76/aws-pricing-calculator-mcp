@@ -25,6 +25,22 @@ except ImportError:
 def save_estimate(estimate_dict):
     """POST estimate to Save API. Returns dict with savedKey and url."""
     resp = curl_post(SAVE_API, estimate_dict)
+    
+    # Check for error status codes
+    status_code = resp.get("statusCode", 200)
+    if status_code >= 400:
+        # Error response
+        body_str = resp.get("body", "")
+        if isinstance(body_str, str):
+            try:
+                error_body = json.loads(body_str)
+                error_msg = error_body.get("message", body_str)
+            except:
+                error_msg = body_str
+        else:
+            error_msg = str(body_str)
+        raise RuntimeError(f"Save API error ({status_code}): {error_msg}")
+    
     # Parse the nested body JSON string
     if isinstance(resp.get("body"), str):
         body = json.loads(resp["body"])
@@ -35,7 +51,15 @@ def save_estimate(estimate_dict):
     saved_key = body.get("savedKey", "")
     if not saved_key:
         # Fallback: sometimes it's in message field
-        saved_key = body.get("message", "").split()[-1] if "message" in body else ""
+        message = body.get("message", "")
+        if "file name is" in message:
+            # Extract from message like "The file name is abc123"
+            saved_key = message.split()[-1]
+        else:
+            saved_key = ""
+    
+    if not saved_key:
+        raise RuntimeError(f"No savedKey in response: {json.dumps(body)}")
     
     url = CALCULATOR_URL.format(key=saved_key)
     return {"savedKey": saved_key, "url": url}

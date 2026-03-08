@@ -8,7 +8,9 @@ UUID generation, API endpoint constants, and region code mapping.
 
 import json
 import subprocess
+import tempfile
 import uuid
+from pathlib import Path
 
 # ---------------------------------------------------------------------------
 # API Endpoints
@@ -69,11 +71,10 @@ def curl_get(url, timeout=30):
 
 def curl_post(url, data, timeout=30):
     """POST JSON via curl subprocess with required calculator headers."""
-    from pathlib import Path
     from datetime import datetime, timezone
 
     # Debug logging
-    debug_file = Path("/tmp/aws_calc_debug.log")
+    debug_file = Path(tempfile.gettempdir()) / "aws_calc_debug.log"
     json_str = json.dumps(data)
     with open(debug_file, "a") as f:
         f.write(f"[DEBUG curl_post] URL: {url}\n")

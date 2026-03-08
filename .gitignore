@@ -39,6 +39,7 @@ ENV/
 .coverage
 htmlcov/
 debug/
+.hypothesis/
 
 # OS
 .DS_Store

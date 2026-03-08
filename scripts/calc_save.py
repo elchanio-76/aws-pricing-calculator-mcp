@@ -12,6 +12,7 @@ Usage:
 import argparse
 import json
 import sys
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -28,7 +29,7 @@ def save_estimate(estimate_dict):
     from pathlib import Path
 
     # Debug logging to file
-    debug_file = Path("/tmp/aws_calc_debug.log")
+    debug_file = Path(tempfile.gettempdir()) / "aws_calc_debug.log"
     with open(debug_file, "a") as f:
         f.write(f"\n{'='*60}\n")
         f.write(

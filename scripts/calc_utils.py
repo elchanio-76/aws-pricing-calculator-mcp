@@ -67,16 +67,35 @@ def curl_get(url, timeout=30):
 
 def curl_post(url, data, timeout=30):
     """POST JSON via curl subprocess with required calculator headers."""
+    from pathlib import Path
+    from datetime import datetime, timezone
+    
+    # Debug logging
+    debug_file = Path("/tmp/aws_calc_debug.log")
+    json_str = json.dumps(data)
+    with open(debug_file, "a") as f:
+        f.write(f"[DEBUG curl_post] URL: {url}\n")
+        f.write(f"[DEBUG curl_post] Data type: {type(data)}\n")
+        f.write(f"[DEBUG curl_post] JSON length: {len(json_str)}\n")
+        f.write(f"[DEBUG curl_post] JSON preview: {json_str[:500]}...\n")
+    
     result = subprocess.run(
         [
             "curl", "-s", "-X", "POST", url,
             "-H", "Content-Type: application/json",
             "-H", "Origin: https://calculator.aws",
             "-H", "Referer: https://calculator.aws/",
-            "-d", json.dumps(data),
+            "-d", json_str,
         ],
         capture_output=True, text=True, timeout=timeout,
     )
+    
+    with open(debug_file, "a") as f:
+        f.write(f"[DEBUG curl_post] Return code: {result.returncode}\n")
+        f.write(f"[DEBUG curl_post] Response: {result.stdout[:500]}\n")
+        if result.stderr:
+            f.write(f"[DEBUG curl_post] Stderr: {result.stderr}\n")
+    
     if result.returncode != 0:
         raise RuntimeError(f"curl POST failed: {result.stderr}")
     return json.loads(result.stdout)

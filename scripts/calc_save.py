@@ -25,24 +25,31 @@ except ImportError:
 def save_estimate(estimate_dict):
     """POST estimate to Save API. Returns dict with savedKey and url."""
     import sys
+    from pathlib import Path
     
-    # Debug logging
-    print(f"[DEBUG save_estimate] Estimate type: {type(estimate_dict)}", file=sys.stderr)
-    print(f"[DEBUG save_estimate] Estimate keys: {list(estimate_dict.keys()) if isinstance(estimate_dict, dict) else 'N/A'}", file=sys.stderr)
-    
-    # Validate estimate structure
-    if not isinstance(estimate_dict, dict):
-        raise TypeError(f"estimate_dict must be a dict, got {type(estimate_dict).__name__}")
-    
-    # Check for required top-level keys
-    required_keys = ["name", "groups", "totalCost", "metaData"]
-    missing_keys = [k for k in required_keys if k not in estimate_dict]
-    if missing_keys:
-        print(f"[DEBUG save_estimate] Missing required keys: {missing_keys}", file=sys.stderr)
-    
-    # Log estimate size
-    estimate_json = json.dumps(estimate_dict)
-    print(f"[DEBUG save_estimate] JSON size: {len(estimate_json)} bytes", file=sys.stderr)
+    # Debug logging to file
+    debug_file = Path("/tmp/aws_calc_debug.log")
+    with open(debug_file, "a") as f:
+        f.write(f"\n{'='*60}\n")
+        f.write(f"[DEBUG save_estimate] Called at {datetime.now(timezone.utc).isoformat()}\n")
+        f.write(f"[DEBUG save_estimate] Estimate type: {type(estimate_dict)}\n")
+        f.write(f"[DEBUG save_estimate] Estimate keys: {list(estimate_dict.keys()) if isinstance(estimate_dict, dict) else 'N/A'}\n")
+        
+        # Validate estimate structure
+        if not isinstance(estimate_dict, dict):
+            f.write(f"[ERROR] estimate_dict is not a dict!\n")
+            raise TypeError(f"estimate_dict must be a dict, got {type(estimate_dict).__name__}")
+        
+        # Check for required top-level keys
+        required_keys = ["name", "groups", "totalCost", "metaData"]
+        missing_keys = [k for k in required_keys if k not in estimate_dict]
+        if missing_keys:
+            f.write(f"[DEBUG save_estimate] Missing required keys: {missing_keys}\n")
+        
+        # Log estimate size and first 500 chars
+        estimate_json = json.dumps(estimate_dict)
+        f.write(f"[DEBUG save_estimate] JSON size: {len(estimate_json)} bytes\n")
+        f.write(f"[DEBUG save_estimate] JSON preview: {estimate_json[:500]}...\n")
     
     resp = curl_post(SAVE_API, estimate_dict)
     

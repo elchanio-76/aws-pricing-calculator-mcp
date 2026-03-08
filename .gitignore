@@ -44,3 +44,6 @@ debug/
 # OS
 .DS_Store
 Thumbs.db
+
+# PyPI credentials (security)
+.pypirc

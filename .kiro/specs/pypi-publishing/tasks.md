@@ -72,7 +72,7 @@ This implementation plan provides step-by-step tasks for publishing the AWS Pric
   - **Property 16: Required Files in Distribution**
   - **Validates: Requirements 8.2**
 
-- [ ] 6. Update .gitignore for security
+- [x] 6. Update .gitignore for security
   - Ensure .gitignore includes `.pypirc` to prevent committing API tokens
   - Add patterns for `dist/`, `build/`, and `*.egg-info/` directories
   - Verify no sensitive files are tracked
@@ -82,13 +82,13 @@ This implementation plan provides step-by-step tasks for publishing the AWS Pric
   - **Property 17: Security Configuration**
   - **Validates: Requirements 9.2**
 
-- [ ] 7. Install build tools
+- [x] 7. Install build tools
   - Install `build` package: `pip install build`
   - Install `twine` package: `pip install twine`
   - Verify installations are successful
   - _Requirements: 3.1_
 
-- [ ] 8. Build package distributions
+- [x] 8. Build package distributions
   - Clean previous builds: `rm -rf dist/ build/ *.egg-info`
   - Build wheel and source distributions: `python -m build`
   - Verify both `.whl` and `.tar.gz` files are created in `dist/` directory
@@ -103,7 +103,7 @@ This implementation plan provides step-by-step tasks for publishing the AWS Pric
   - **Property 6: Source Files Inclusion**
   - **Validates: Requirements 3.3**
 
-- [ ] 9. Validate package with twine
+- [x] 9. Validate package with twine
   - Run `twine check dist/*` to validate package metadata and structure
   - Fix any errors or warnings reported by twine
   - Ensure validation passes without issues
@@ -113,7 +113,7 @@ This implementation plan provides step-by-step tasks for publishing the AWS Pric
   - **Property 8: Package Validation**
   - **Validates: Requirements 3.5, 8.1**
 
-- [ ] 10. Test local installation
+- [x] 10. Test local installation
   - Create a clean virtual environment: `python -m venv test_env`
   - Activate the environment
   - Install the built wheel: `pip install dist/*.whl`
@@ -135,10 +135,10 @@ This implementation plan provides step-by-step tasks for publishing the AWS Pric
   - **Property 11: Package Importability**
   - **Validates: Requirements 5.5, 7.4**
 
-- [ ] 11. Checkpoint - Ensure all tests pass
+- [x] 11. Checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 12. Update README.md with PyPI installation instructions
+- [x] 12. Update README.md with PyPI installation instructions
   - Add installation section with `pip install elchanio76-aws-pricing-calculator-mcp`
   - Add installation section with `uvx elchanio76-aws-pricing-calculator-mcp`
   - Include usage examples for the MCP server
@@ -165,7 +165,7 @@ This implementation plan provides step-by-step tasks for publishing the AWS Pric
   - **Property 19: CI/CD Documentation**
   - **Validates: Requirements 10.4**
 
-- [ ] 13. Update LICENSE file
+- [x] 13. Update LICENSE file
   - Replace `[Your Name]` placeholder with actual copyright holder name
   - Verify year is correct (2026)
   - Ensure LICENSE is included in distribution
@@ -178,21 +178,21 @@ This implementation plan provides step-by-step tasks for publishing the AWS Pric
   - Save token securely (it will only be shown once)
   - _Requirements: 4.1, 9.1_
 
-- [ ] 15. Configure PyPI credentials
+- [x] 15. Configure PyPI credentials
   - Create `~/.pypirc` file with PyPI and TestPyPI configurations
   - Add API tokens to the configuration file
   - Set file permissions to 600: `chmod 600 ~/.pypirc`
   - Verify `.pypirc` is in `.gitignore`
   - _Requirements: 9.1, 9.2_
 
-- [ ] 16. Test upload to TestPyPI
+- [x] 16. Test upload to TestPyPI
   - Upload to TestPyPI: `twine upload --repository testpypi dist/*`
   - Verify upload was successful
   - Check package page on https://test.pypi.org/project/elchanio76-aws-pricing-calculator-mcp/
   - Verify README renders correctly on TestPyPI
   - _Requirements: 4.4_
 
-- [ ] 17. Test installation from TestPyPI
+- [x] 17. Test installation from TestPyPI
   - Create clean virtual environment
   - Install from TestPyPI: `pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ elchanio76-aws-pricing-calculator-mcp`
   - Note: `--extra-index-url` needed for dependencies not on TestPyPI
@@ -200,10 +200,10 @@ This implementation plan provides step-by-step tasks for publishing the AWS Pric
   - Test basic functionality
   - _Requirements: 5.1, 5.2_
 
-- [ ] 18. Checkpoint - Verify TestPyPI installation
+- [x] 18. Checkpoint - Verify TestPyPI installation
   - Ensure TestPyPI installation works correctly, ask the user if questions arise.
 
-- [ ] 19. Prepare release commit and tag
+- [-] 19. Prepare release commit and tag
   - Commit all changes: `git add -A && git commit -m "Prepare release v0.1.0"`
   - Create git tag: `git tag v0.1.0`
   - Push commit: `git push origin pypi-publishing`
